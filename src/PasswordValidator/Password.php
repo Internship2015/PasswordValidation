@@ -42,8 +42,8 @@ class Password
     public function strength()
     {
         $strength = 0;
-              
-
+        
+        
         if ($this->isLongerThanLimit()) {
             $strength += 1;
             
@@ -131,7 +131,6 @@ class Password
         if (in_array($this->password, $commanPasswords)) {
             return true;
         }
-        
         
         else {
             return false;

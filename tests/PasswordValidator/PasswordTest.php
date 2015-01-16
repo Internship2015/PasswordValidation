@@ -10,7 +10,7 @@ class PasswordTest extends \PHPUnit_Framework_TestCase
     public function testCanBeEmpty()
     {
         $pasword = new Password("");
-        $this->assertEquals(true,$pasword->isEmpty());
+        $this->assertEquals(true, $pasword->isEmpty());
     }
     public function testCannotBeEmpty()
     {
@@ -23,21 +23,21 @@ class PasswordTest extends \PHPUnit_Framework_TestCase
         
         $pasword = new Password("asA");
         $this->assertEquals(2, $pasword->strength());
-       
+        
         $pasword = new Password("AAasdsks67");
         $this->assertEquals(4, $pasword->strength());
         
         $pasword = new Password("anushA1268#");
         $this->assertEquals(5, $pasword->strength());
-
+        
         $pasword = new Password("anushA126");
         $this->assertEquals(4, $pasword->strength());
-
+        
         $pasword = new Password("a@nushA126");
-        $this->assertEquals(5, $pasword->strength()); 
+        $this->assertEquals(5, $pasword->strength());
     }
     public function testLengthShouldBeLongerThanLimit()
-    {   
+    {
         $pasword = new Password("abg12III");
         $this->assertEquals(true, $pasword->isLongerThanLimit());
     }
@@ -53,7 +53,7 @@ class PasswordTest extends \PHPUnit_Framework_TestCase
         $pasword = new Password("abg12III");
         $this->assertEquals(true, $pasword->hasUpperCaseLetter());
     }
-     public function testMustContainAnyUpperCaseLetter()
+    public function testMustContainAnyUpperCaseLetter()
     {
         $pasword = new Password("abg12iii");
         $this->assertEquals(false, $pasword->hasUpperCaseLetter());
@@ -91,7 +91,4 @@ class PasswordTest extends \PHPUnit_Framework_TestCase
         $pasword = new Password("abA236#189");
         $this->assertEquals(false, $pasword->isCommonPassword());
     }
-    
-
 }
-?>
