@@ -22,19 +22,19 @@ class PasswordTest extends \PHPUnit_Framework_TestCase
     {
         
         $pasword = new Password("asA");
-        $this->assertEquals(3, $pasword->strength());
-        /*
-        $pasword = new Password("AAasdsks67");
         $this->assertEquals(2, $pasword->strength());
+       
+        $pasword = new Password("AAasdsks67");
+        $this->assertEquals(4, $pasword->strength());
         
         $pasword = new Password("anushA1268#");
-        $this->assertEquals(3, $pasword->strength());
+        $this->assertEquals(5, $pasword->strength());
 
         $pasword = new Password("anushA126");
         $this->assertEquals(4, $pasword->strength());
 
-        $pasword = new Password("anushA126");
-        $this->assertEquals(5, $pasword->strength()); */
+        $pasword = new Password("a@nushA126");
+        $this->assertEquals(5, $pasword->strength()); 
     }
     public function testLengthShouldBeLongerThanLimit()
     {   

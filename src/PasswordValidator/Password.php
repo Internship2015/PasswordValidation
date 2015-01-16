@@ -42,7 +42,6 @@ class Password
     public function strength()
     {
         $strength = 0;
-
               
 
         if ($this->isLongerThanLimit()) {
@@ -65,7 +64,7 @@ class Password
             $strength += 1;
             
         }
-        if ($this->isCommonPassword()) {
+        if (!$this->isCommonPassword()) {
             $strength += 1;
             
         }
