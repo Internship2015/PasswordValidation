@@ -1,4 +1,7 @@
+{
 "autoload": {
-"psr-4": {"PasswordValidator\\": "src/PasswordValidator/"}
+"psr-4": {"Password\\": "src/PasswordValidator/"}
 }
 }
+
+
