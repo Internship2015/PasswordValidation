@@ -1,50 +1,46 @@
 <?php
-//namespace test;
-include 'Password.php';
+
+namespace Password;
+
+include_once "/../vendor/autoload.php";
+
+include_once "/srv/PasswordValidation/anusha/src/PasswordValidator/Password.php";
+//include 'Password.php';
 class PasswordTest extends PHPUnit_Framework_TestCase
 {
 /**
 * 
 */
-private $pswd;
-
-
- public function setUp()
-     {
-
-     $this->pswd = new Password();
-
-      }
-
+//private $pasword;
 
     public function testLengthofpassword() 
           {
-          $object = true;
-          $this->assertEquals($object,$this->pswd->validation("fghgfhhhf"));
+          $pasword = new Password("abg12III")
+          $this->assertEquals($object,$pasword->passwordLengthValidation());
           }
 
 
        public function testUppercaseletter()
           {
            $object = true;
-           $this->assertEquals($object,$this->pswd->validationupp("asnnA1*"));
+           $this->assertEquals($object,$this->pasword->validationOfUppercaseLetter());
           } 
        
-       public function testspecialsymbols()
+       public function testSpecialSymbols()
           {
           $object = true;
-          $this->assertEquals($object,$this->pswd->validationspecial("asnnA1*#"));
+          $this->assertEquals($object,$this->pasword->validationOfSpecialCharacter());
           } 
       
        public function testNumber()
            {
             $object = true;
-            $this->assertEquals($object,$this->pswd->validationnumber("asnn231*#"));
+            $this->assertEquals($object,$this->pasword->validationOfNumber());
             }   
-       public function testCommonpassword()
+       public function testCommonPassword()
             {
             $object = true;
-            $this->assertEquals($object,$this->pswd->validationcommon("anusha"));
+            $this->assertEquals($object,$this->pasword->validationCommonPassword());
             }
                   }
  ?>
