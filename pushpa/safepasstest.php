@@ -1,5 +1,6 @@
 <?
-include '../src/safepass.php';
+include 'safepass.php';
+include_once "/usr/local/bin/vendor/autoload.php";
 class safepasstest extends \PHPUnit_Framework_TestCase{
 	/**
      * @var \src\safepass
@@ -16,25 +17,15 @@ class safepasstest extends \PHPUnit_Framework_TestCase{
 				$this->assertEmpty($expected, $actual);
 
 		}
-		public function testPasswordLength()
+		public function testPasswordLengthIsTooShort()
 		{
-				$expected = 6;
-				$actual = $this->password->countpasswordlength("ab1@Ccdef");
-				$this->assertGreaterThanOrEqual($expected, $actual);
-				
+				$expected1 = "5";
+				$actual1 = $this->password->countpasswordlength("asvd1");
+				$this->assertEquals($expected1, $actual1);		
+		
 		}
-		public function testPasswordIsTooLong()
-		{
-				$expected = 10;
-				$actual = $this->password->passistoolong("Shjhjd$56nngg");
-				$this->assertGreaterThan($expected, $actual);
-		}
-		public function testPasswordIsTooShort()
-		{
-				$expected = 3;
-				$actual = $this->password->passistooshort("d1d");
-				$this->assertEquals($expected, $actual);
-		}
+		
+		
 		public function testPasswordIncludeAtleastOneNumber()
 		{
 				$expected = "aA1chas3";

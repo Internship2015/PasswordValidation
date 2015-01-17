@@ -10,18 +10,13 @@ class safepass{
 	{
 		
 		$length = strlen($pwd);
-		return $length;	
+		if($length < 6)
+		{
+			return $length;
+		}
+			
 	}
 	
-	public function passistoolong($pwd)
-	{
-				return strlen($pwd);	
-	}
-	public function passistooshort($pwd)
-	{
-		$length = strlen($pwd);
-		return $length;	
-	}
 	public function testPasswordIncludeNumber($pwd)
 	{
 		if(preg_match_all('$\S*(?=\S*[a-z])(?=\S*[0-9])(?=\S*[A-Z])\S*$', $pwd))
