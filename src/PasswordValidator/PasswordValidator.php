@@ -1,4 +1,5 @@
 <?php
+
 namespace PasswordValidator;
 
 class PasswordValidator
@@ -12,8 +13,7 @@ class PasswordValidator
     {
         if (empty($this->password)) {
             return true;
-        } //empty($this->password)
-        else {
+        } else {
             return false;
         }
     } //This function checks Password is empty
@@ -21,8 +21,7 @@ class PasswordValidator
     {
         if (strlen($this->password) >= 6) {
             return true;
-        } //strlen($this->password) >= 6
-        else {
+        } else {
             return false;
         }
     } //This function checks Password length is greater than 6
@@ -30,29 +29,26 @@ class PasswordValidator
     {
         if (preg_match("([A-Z])", $this->password)) {
             return true;
-        } //This case cheks for upper case character has present in password
-        else {
+        } else {
             return false;
         }
-    }
+    } //This function cheks for upper case character has present in password
     public function hasDigit()
     {
         if (preg_match("([0-9])", $this->password)) {
             return true;
-        } //This case cheks for digit has present in password
-        else {
+        } else {
             return false;
         }
-    }
+    } //This function cheks for digit has present in password
     public function hasSpecialCharacter()
     {
         if (preg_match_all("([\W_])", $this->password)) {
             return true;
-        } //This case cheks for special character(including '_' ) has present in password
-        else {
+        } else {
             return false;
         }
-    }
+    } //This function cheks for special character(including '_' ) has present in password
     public function isCommanPassword()
     {
         $commonPassword = array(
@@ -75,9 +71,9 @@ class PasswordValidator
                 }
             } //This case cheks if original password is not comman password then call to strength() function
         } //strlen($this->password) >= 6
-    }
+    } //This function cheks for comman password
     public function strength()
-    {
+            {
         $count;
         $length = strlen($this->password);
         if ($length == 0) {
@@ -95,7 +91,7 @@ class PasswordValidator
             echo "Good!";
             return true;
         } //This case cheks for good password
-        elseif ($length > 6 && $this->hasUpperCaseCharacter() && $this->hasDigit() && $this->hasSpecialCharacter()) {
+        elseif ($length > 6 && $this->hasUpperCaseCharacter()&& $this->hasDigit() && $this->hasSpecialCharacter()) {
             echo "Strong!";
             return true;
         } //This case cheks for strong password
