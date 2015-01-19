@@ -17,24 +17,54 @@ class PasswordValidator
     {
         $this->password = $password;
     }
-    public function strength()
+    public function calculateLength()
     {
-        if (strlen($this->password) == 0) {
-            return true;
-        }
         if (strlen($this->password) >= 6) {
-            if (preg_match_all('$\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$', $this->password)) {
-                return 100;
-            } elseif (preg_match_all('$\S*(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$', $this->password)) {
-                return 70;
-            } elseif (preg_match_all('$\S*(?=\S*[a-z])(?=\S*[A-Z])\S*$', $this->password)) {
-                return 40;
-            } elseif (preg_match("([a-z])", $this->password)) {
-                return 20;
-            }
-            
+            return true;
         } else {
-            return 10;
+            return false;
+        }
+    }
+    public function checkPasswordStrength()
+    {
+        static $strength = 1;
+        if (strlen($this->password) == 0) {
+            return 0;
+        }
+        
+        if (strlen($this->password) < 6) {
+            return 1;
+        }
+        
+        if ($this->calculateLength() && $this->hasLowercaseCharacter()) {
+            $strength += 1;
+            return $strength;
+        }
+        
+        if ($this->calculateLength() && hasSpecialCharacter()) {
+            $strength += 1;
+            return $strength;
+        }
+        if ($this->calculateLength() && hasDigit()) {
+            $strength += 1;
+            return $strength;
+        }
+        if ($this->calculateLength() && hasSpecialCharacter()) {
+            $strength += 1;
+            return $strength;
+        }
+        $str = "/[a-z][0-9][A-Z][|!@#$%&*\/=?,;.:\-_+~^\\\]/";
+        if (preg_match_all($str, $this->password) && $this->calculateLength()) {
+            $strength += 1;
+            return $strength;
+        }
+    }
+    public function hasLowercaseCharacter()
+    {
+        if (preg_match("([a-z])", $this->password)) {
+            return true;
+        } else {
+            return false;
         }
     }
     public function hasSpecialCharacter()
@@ -78,7 +108,6 @@ class PasswordValidator
             "123456",
             "password",
             "welcome",
-            "ninja",
             "abc123",
             "123456789",
             "12345678",
@@ -87,26 +116,14 @@ class PasswordValidator
             "qwerty",
             "111111",
             "freedom",
-            "jesus",
             "monkey",
             "123456",
             "general"
         );
-        
-        if (strlen($this->password) >= 6) {
-            foreach ($commonPassword as $value) {
-                if ($this->password != $value) {
-                    return true;
-                }
-                
-            }
+        if (!array_search($this->password, $commonPassword)) {
+            return true;
         } else {
-            foreach ($commonPassword as $value) {
-                if ($this->password != $value) {
-                    return true;
-                }
-                
-            }
+            return false;
         }
     }
 }

@@ -8,49 +8,83 @@ class PasswordValidatorTest extends \PHPUnit_Framework_TestCase
     {
         
         $password = new PasswordValidator("");
-        $this->assertEquals(true, $password->strength());
+        $this->assertEquals(0, $password->checkPasswordStrength());
         
-        $password = new PasswordValidator("hbhh");
-        $this->assertEquals(10, $password->strength());
+        $password = new PasswordValidator("hbhs");
+        $this->assertEquals(1, $password->checkPasswordStrength());
         
-        $password = new PasswordValidator("hghhfg");
-        $this->assertEquals(20, $password->strength());
+        $password = new PasswordValidator("hghhfgfg");
+        $this->assertEquals(2, $password->checkPasswordStrength());
         
         $password = new PasswordValidator("hahAvas");
-        $this->assertEquals(40, $password->strength());
+        $this->assertEquals(3, $password->checkPasswordStrength());
         
         $password = new PasswordValidator("h2CakksA");
-        $this->assertEquals(70, $password->strength());
+        $this->assertEquals(4, $password->checkPasswordStrength());
+        
+        $password = new PasswordValidator("h@g4bg");
+        $this->assertEquals(5, $password->checkPasswordStrength());
         
         $password = new PasswordValidator("h@gA4&bg");
-        $this->assertEquals(100, $password->strength());
+        $this->assertEquals(6, $password->checkPasswordStrength());
     }
-    public function testPasswordHasSpecialCharacter()
+    
+    public function testHasLowercaseCharacter()
+    {
+        $password = new PasswordValidator("hgb@A3ha");
+        $this->assertEquals(true, $password->hasLowercaseCharacter());
+    }
+    
+    public function testHasSpecialCharacter()
     {
         $password = new PasswordValidator("hgb@A3ha");
         $this->assertEquals(true, $password->hasSpecialCharacter());
     }
-    public function testPasswordhasUppercaseCharacter()
+    
+    public function testShouldContainSpecialCharacter()
+    {
+        $password = new PasswordValidator("hgbA3ha");
+        $this->assertEquals(false, $password->hasSpecialCharacter());
+    }
+    
+    public function testHasUppercaseCharacter()
     {
         $password = new PasswordValidator("hgb@A3ha");
         $this->assertEquals(true, $password->hasUppercaseCharacter());
     }
-    public function testPasswordhasDigit()
+    
+    public function testShouldContainUppercaseCharacter()
+    {
+        $password = new PasswordValidator("hgb@3ha");
+        $this->assertEquals(false, $password->hasUppercaseCharacter());
+    }
+    
+    public function testHasDigit()
     {
         $password = new PasswordValidator("hgb@A3ha");
         $this->assertEquals(true, $password->hasDigit());
     }
-    public function testPasswordIsLongerThanLimit()
+    
+    public function testShouldContainDigit()
+    {
+        $password = new PasswordValidator("hgb@Aha");
+        $this->assertEquals(false, $password->hasDigit());
+    }
+    
+    public function testIsLongerThanLimit()
     {
         $password = new PasswordValidator("hgb@A3ha*!");
         $this->assertEquals(true, $password->isLongerThanLimit());
     }
+    public function testMustBeLongerThanLimit()
+    {
+        $password = new PasswordValidator("hg@A*");
+        $this->assertEquals(false, $password->isLongerThanLimit());
+    }
+    
     public function testCommonPasswordTest()
     {
         $password = new PasswordValidator("Abd13#");
-        $this->assertEquals(true, $password->isCommonPassword());
-
-        $password = new PasswordValidator("Fh23a");
         $this->assertEquals(true, $password->isCommonPassword());
     }
 }
