@@ -1,7 +1,5 @@
 <?php
-
 namespace PasswordValidator;
-
 class PasswordValidator
 {
     
@@ -26,8 +24,8 @@ class PasswordValidator
     {
         return $this->password;
     }
-// to check password contain special character
-    public function hasSpecialCharacter()  
+    // to check password contain special character
+    public function hasSpecialCharacter()
     {
         if (preg_match("([\W])", $this->password)) {
             return true;
@@ -38,13 +36,13 @@ class PasswordValidator
         }
         
     }
-
-
-
-
-        
-
-
+    
+    
+    
+    
+    
+    
+    
     // to check password contain uppercase character
     public function hasUppercaseCharacter()
     {
@@ -98,38 +96,38 @@ class PasswordValidator
         
     }
     
-
-public function isCommonPassword()
- {
- $commonPassword = array(
- "welcome",
- "ninja",
- "abc123",
- "12345678",
- "sunshine",
- "princess",
- "qwerty",
- "111111",
-"freedom",
- "jesus",
- "monkey",
- "123456",
- "general"
- );
-
- if (strlen($this->password) >= 6) {
-foreach ($commonPassword as $value) {
- if ($this->password != $value) {
- return true;
- }
+    
+    public function isCommonPassword()
+    {
+        $commonPassword = array(
+            "welcome",
+            "ninja",
+            "abc123",
+            "12345678",
+            "sunshine",
+            "princess",
+            "qwerty",
+            "111111",
+            "freedom",
+            "jesus",
+            "monkey",
+            "123456",
+            "general"
+        );
+        
+        if (strlen($this->password) >= 6) {
+            foreach ($commonPassword as $value) {
+                if ($this->password != $value) {
+                    return true;
+                }
+            }
+        } else {
+            foreach ($commonPassword as $value) {
+                if ($this->password != $value) {
+                    return true;
+                }
+            }
+        }
+    }
 }
- } else {
- foreach ($commonPassword as $value) {
- if ($this->password != $value) {
- return true;
- }
- }
-}
-}
-}
- ?>
+?> 
