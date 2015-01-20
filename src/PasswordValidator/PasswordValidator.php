@@ -17,55 +17,14 @@ class PasswordValidator
     {
         $this->password = $password;
     }
-    public function calculateLength()
+    public function isEmpty()
     {
-        if (strlen($this->password) >= 6) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public function strength()
-    {
-        static $strength = 1;
         if (strlen($this->password) == 0) {
-            return 0;
-        }
-        
-        if (strlen($this->password) < 6) {
-            return 1;
-        }
-        
-        if ($this->calculateLength() && $this->hasLowercaseCharacter()) {
-            $strength += 1;     
-            return $strength;
-        }
-        
-        if ($this->calculateLength() && hasSpecialCharacter()) {
-            $strength += 1;
-            return $strength;
-        }
-        if ($this->calculateLength() && hasDigit()) {
-            $strength += 1;
-            return $strength;
-        }
-        if ($this->calculateLength() && hasSpecialCharacter()) {
-            $strength += 1;
-            return $strength;
-        }
-        $str = "/[a-z][0-9][A-Z][|!@#$%&*\/=?,;.:\-_+~^\\\]/";
-        if (preg_match_all($str, $this->password) && $this->calculateLength()) {
-            $strength += 1;
-            return $strength;
-        }
-    }
-    public function hasLowercaseCharacter()
-    {
-        if (preg_match("([a-z])", $this->password)) {
             return true;
         } else {
             return false;
         }
+        
     }
     public function hasSpecialCharacter()
     {
@@ -120,10 +79,36 @@ class PasswordValidator
             "123456",
             "general"
         );
-        if (!array_search($this->password, $commonPassword)) {
+        if (array_search($this->password, $commonPassword)) {
             return true;
         } else {
             return false;
         }
+    }
+    
+    public function strength()
+    {
+        $strength = 0;
+        
+        if (!($this->isLongerThanLimit()) || $this->isCommonPassword()) {
+            return $strength;
+        } else {
+            $strength += 1;
+        }
+        if ($this->hasUppercaseCharacter()) {
+            $strength += 1;
+            
+        }
+        if ($this->hasDigit()) {
+            $strength += 1;
+            
+        }
+        if ($this->hasSpecialCharacter()) {
+            $strength += 1;
+            
+        }
+        
+        return $strength;
+        
     }
 }

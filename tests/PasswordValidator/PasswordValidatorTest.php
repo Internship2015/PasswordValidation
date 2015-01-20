@@ -4,35 +4,35 @@ namespace PasswordValidator;
 include_once "../../vendor/autoload.php";
 class PasswordValidatorTest extends \PHPUnit_Framework_TestCase
 {
+    public function testIsEmpty()
+    {
+        $password = new PasswordValidator("");
+        $this->assertEquals(true, $password->isEmpty());
+    }
+    public function testNotEmpty()
+    {
+        $password = new PasswordValidator("kshdkshka");
+        $this->assertEquals(false, $password->isEmpty());
+    }
     public function testCheckPasswordStrength()
     {
-        
         $password = new PasswordValidator("");
         $this->assertEquals(0, $password->strength());
         
-        $password = new PasswordValidator("hbhs");
-        $this->assertEquals(1, $password->strength());
-        
-        $password = new PasswordValidator("hghhfgfg");
-        $this->assertEquals(2, $password->strength());
+        $password = new PasswordValidator("monkey");
+        $this->assertEquals(0, $password->strength());
         
         $password = new PasswordValidator("hahAvas");
-        $this->assertEquals(3, $password->strength());
+        $this->assertEquals(2, $password->strength());
         
         $password = new PasswordValidator("h2CakksA");
-        $this->assertEquals(4, $password->strength());
+        $this->assertEquals(3, $password->strength());
         
         $password = new PasswordValidator("h@g4bg");
-        $this->assertEquals(5, $password->strength());
+        $this->assertEquals(3, $password->strength());
         
-        $password = new PasswordValidator("h@gA4&bg");
-        $this->assertEquals(6, $password->strength());
-    }
-    
-    public function testHasLowercaseCharacter()
-    {
-        $password = new PasswordValidator("hgb@A3ha");
-        $this->assertEquals(true, $password->hasLowercaseCharacter());
+        $password = new PasswordValidator("h@gA4&bsdsg");
+        $this->assertEquals(4, $password->strength());
     }
     
     public function testHasSpecialCharacter()
@@ -82,15 +82,15 @@ class PasswordValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(false, $password->isLongerThanLimit());
     }
     
-    public function testCommonPasswordTest()
-    {
-        $password = new PasswordValidator("Abd13#");
-        $this->assertEquals(true, $password->isCommonPassword());
-    }
-
-    public function testNotCommonPasswordTest()
+    public function testIsCommonPassword()
     {
         $password = new PasswordValidator("welcome");
+        $this->assertEquals(true, $password->isCommonPassword());
+    }
+    
+    public function testNotCommonPassword()
+    {
+        $password = new PasswordValidator("Abd13#");
         $this->assertEquals(false, $password->isCommonPassword());
     }
 }
