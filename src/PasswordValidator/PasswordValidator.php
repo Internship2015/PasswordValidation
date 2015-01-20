@@ -1,5 +1,5 @@
 <?php
- namespace PasswordValidator;
+namespace PasswordValidator;
 
 class PasswordValidator
 {
@@ -25,22 +25,22 @@ class PasswordValidator
     {
         return $this->password;
     }
-
+    
     // to check password contain special character
-
+    
     public function hasSpecialCharacter()
     {
         if (preg_match("([\W])", $this->password)) {
             return true;
         } else {
-             return false;
+            return false;
             
         }
         
     }
-     
+    
     // to check password contain uppercase character
-
+    
     public function hasUppercaseCharacter()
     {
         if (preg_match("([A-Z])", $this->password)) {
@@ -50,9 +50,9 @@ class PasswordValidator
             
         }
     }
-
+    
     // to check password contain a digit
-
+    
     public function hasDigit()
     {
         if (preg_match("([0-9])", $this->password)) {
@@ -63,7 +63,7 @@ class PasswordValidator
         }
         
     }
-
+    
     // to check password length which is greater than or equal to 6
     
     public function isLongerThanLimit()
@@ -78,39 +78,31 @@ class PasswordValidator
     //To check Password strength
     public function passwordStrength()
     {
-         $strength=1;
-
-        if (strlen($this->password) == 0) {
-            return 1;
+        $strength = 0;
+        
+        if ((!$this->isLongerThanLimit()) || $this->isCommonPassword()) {
+            return 0;
         }
-          
-        if ($this->hasSpecialCharacter()) {
-            $strength += 1;
-            //return $strength;
-        }
-    
+        
         if ($this->hasUppercaseCharacter()) {
             $strength += 1;
-            //return $strength;
+            
         }
-
+        if ($this->hasSpecialCharacter()) {
+            $strength += 1;
+            
+        }
+        
         if ($this->hasDigit()) {
             $strength += 1;
-            //return $strength;
+            
         }
-        if ($this->isLongerThanLimit()) {
-            $strength += 1;
-            //return $strength;
-        }
-        if (preg_match_all("([A-Z][\d][\W][a-b])", $this->password)) {
-            $strength += 4;
-            //return $strength;
-        }
-       return $strength;
+               
+        return $strength;
     }
- 
- //to check password common password
-
+    
+    //to check password common password
+    
     public function isCommonPassword()
     {
         $commonPassword = array(
@@ -128,17 +120,13 @@ class PasswordValidator
             "123456",
             "general"
         );
-
-        if (in_array($this->password,$commonPassword)) 
-        {
-            return false;
-      }
-        else {
+        
+        if (in_array($this->password, $commonPassword)) {
             return true;
+        } else {
+            return false;
         }
-
-
+        
+        
     }
 }
-
-?> 

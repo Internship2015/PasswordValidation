@@ -27,7 +27,7 @@ class PasswordValidatorTest extends \PHPUnit_Framework_TestCase
     public function testCanNotBeLessThanLimit()
     {
         $password1 = new PasswordValidator("gau");
-        $actual = $password1->isLongerThanLimit();
+        $actual    = $password1->isLongerThanLimit();
         $this->assertEquals(false, $actual);
     }
     
@@ -37,86 +37,84 @@ class PasswordValidatorTest extends \PHPUnit_Framework_TestCase
         $actual    = $password1->hasUppercaseCharacter();
         $this->assertEquals(true, $actual);
     }
-
-    public function testShouldNotBeWithoutUppercaseCharacter()
+    
+    public function testMustContainAtleastOneUppercaseCharacter()
     {
         $password1 = new PasswordValidator("bhapkar");
         $actual    = $password1->hasUppercaseCharacter();
         $this->assertEquals(false, $actual);
     }
-
+    
     public function testShouldBeDigit()
     {
         $password1 = new PasswordValidator("gau12345");
         $actual    = $password1->hasDigit();
         $this->assertEquals(true, $actual);
     }
-    public function testShouldNotBeWithoutDigit()
+    public function testMustContainAtleastOneDigit()
     {
         $password1 = new PasswordValidator("bhapkar");
         $actual    = $password1->hasDigit();
         $this->assertEquals(false, $actual);
     }
-
+    
     public function testShouldBeSpecialCharacter()
     {
         $password1 = new PasswordValidator("bhapkar&&**");
         $actual    = $password1->hasSpecialCharacter();
         $this->assertEquals(true, $actual);
     }
-
-    public function testShouldNotBeWithoutSpecialCharacter()
+    
+    public function testMustContaionAtleastOneSpecialCharacter()
     {
         $password1 = new PasswordValidator("bhapkar");
         $actual    = $password1->hasSpecialCharacter();
         $this->assertEquals(false, $actual);
         
     }
-
-    public function testPasswordStrengthVeryWeak()
+    
+    public function testStrengthVeryWeak()
     {
         $password1 = new PasswordValidator("");
         
-        $actual    = $password1->PasswordStrength();
+        $actual = $password1->PasswordStrength();
+        $this->assertEquals(0, $actual);
+    }
+    
+    public function testStrengthWeak()
+    {
+        $password1 = new PasswordValidator("WELLCOME");
+        
+        $actual = $password1->PasswordStrength();
         $this->assertEquals(1, $actual);
     }
-
-     public function testPasswordStrengthWeak()
+    
+    public function testStrengthVeryGood()
     {
-        $password1 = new PasswordValidator("HIII");
+        $password1 = new PasswordValidator("WE#&&&*");
         
-        $actual    = $password1->PasswordStrength();
+        $actual = $password1->PasswordStrength();
         $this->assertEquals(2, $actual);
     }
     
-    public function testPasswordVeryGood()
-    {
-        $password1 = new PasswordValidator("bhapkar");
-        
-        $actual    = $password1->PasswordStrength();
-        $this->assertEquals(2, $actual);
-    }
-
-    public function testPasswordStrengthStrong()
+    public function testStrengthStrong()
     {
         $password1 = new PasswordValidator("Gau123&&");
         $actual    = $password1->PasswordStrength();
-        $this->assertEquals(5, $actual);
+        $this->assertEquals(3, $actual);
     }
     
-    public function testShouldNotBeCommonPassword()
+    public function testNotCommonPassword()
     {
-        $password1 = new PasswordValidator("GAURI12");
-        $actual    = $password1->isCommonPassword();
-        $this->assertEquals(true, $actual);
-    }
-    
-     public function testShouldBeNotCommonPassword()
-    {
-        $password1 = new PasswordValidator("jesus");
+        $password1 = new PasswordValidator("1243@fff");
         $actual    = $password1->isCommonPassword();
         $this->assertEquals(false, $actual);
     }
+    
+    public function testIsCommonPassword()
+    {
+        $password1 = new PasswordValidator("jesus");
+        $actual    = $password1->isCommonPassword();
+        $this->assertEquals(true, $actual);
+    }
 }
-?>
-
