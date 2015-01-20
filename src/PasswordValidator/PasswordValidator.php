@@ -1,5 +1,4 @@
 <?php
-
 namespace PasswordValidator;
 
 class PasswordValidator
@@ -9,22 +8,55 @@ class PasswordValidator
     {
         $this->password = $password;
     }
-    public function hasEmpty()
+    
+    /* This function return Password which is entered by user
+    Output type=string
+    */
+    
+    public function getPassWord()
+    {
+        return $this->password;
+    }
+    
+    /* This function calculate Password length
+    Output type=integer
+    */
+    
+    public function calculateLength()
+    {
+        return strlen($this->password);
+    }
+    
+    /* This function checks Password is empty
+    Output type=boolean
+    */
+    
+    public function isEmpty()
     {
         if (empty($this->password)) {
             return true;
         } else {
             return false;
         }
-    } //This function checks Password is empty
-    public function passwordLengthValidation()
+    }
+    
+    /* This function checks Password length is greater than 6
+    Output type=boolean
+    */
+    
+    public function isLengthLogerThanLimit()
     {
         if (strlen($this->password) >= 6) {
             return true;
         } else {
             return false;
         }
-    } //This function checks Password length is greater than 6
+    }
+    
+    /* This function cheks for upper case character has present in password
+    Output type=boolean
+    */
+    
     public function hasUpperCaseCharacter()
     {
         if (preg_match("([A-Z])", $this->password)) {
@@ -32,7 +64,12 @@ class PasswordValidator
         } else {
             return false;
         }
-    } //This function cheks for upper case character has present in password
+    }
+    
+    /*This function cheks for digit has present in password
+    Output type=boolean
+    */
+    
     public function hasDigit()
     {
         if (preg_match("([0-9])", $this->password)) {
@@ -40,7 +77,12 @@ class PasswordValidator
         } else {
             return false;
         }
-    } //This function cheks for digit has present in password
+    }
+    
+    /* This function cheks for special character has present in password
+    Output type=boolean
+    */
+    
     public function hasSpecialCharacter()
     {
         if (preg_match_all("([\W_])", $this->password)) {
@@ -48,7 +90,12 @@ class PasswordValidator
         } else {
             return false;
         }
-    } //This function cheks for special character(including '_' ) has present in password
+    }
+    
+    /* This function cheks for comman password
+    Output type=boolean
+    */
+    
     public function isCommanPassword()
     {
         $commonPassword = array(
@@ -61,39 +108,38 @@ class PasswordValidator
             "monkey*999",
             "general#127"
         );
-        if (strlen($this->password) >= 6) {
-            foreach ($commonPassword as $value) {
-                if ($this->password === $value) {
-                    return true;
-                } //This case cheks for comman password
-                else {
-                    $this->strength();
-                }
-            } //This case cheks if original password is not comman password then call to strength() function
-        } //strlen($this->password) >= 6
-    } //This function cheks for comman password
+        if (in_array($this->password, $commonPassword)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /* This function checks Password strength(in numeric(0-5))
+    Output type=interger
+    */
+    
     public function strength()
-            {
-        $count;
-        $length = strlen($this->password);
-        if ($length == 0) {
-            $this->hasEmpty();
-        } //This case cheks for empty password
-        elseif ($length < 6 && ($this->hasUpperCaseCharacter() || $this->hasDigit() || $this->hasSpecialCharacter())) {
-            echo "Very Weak";
-            return true;
-        } //This case cheks for very weak password
-        elseif ($length >= 6 && !($this->hasUpperCaseCharacter()&& $this->hasDigit() && $this->hasSpecialCharacter())) {
-            echo "Weak";
-            return true;
-        } //This case cheks for weak password
-        elseif ($length == 6 && $this->hasUpperCaseCharacter() && $this->hasDigit() && $this->hasSpecialCharacter()) {
-            echo "Good!";
-            return true;
-        } //This case cheks for good password
-        elseif ($length > 6 && $this->hasUpperCaseCharacter()&& $this->hasDigit() && $this->hasSpecialCharacter()) {
-            echo "Strong!";
-            return true;
-        } //This case cheks for strong password
+    {
+        $count = 0;
+        if ($this->isEmpty()) {
+            return $count;
+        }
+        if ($this->hasUpperCaseCharacter()) {
+            $count += 1;
+        }
+        if ($this->hasSpecialCharacter()) {
+            $count += 1;
+        }
+        if ($this->hasDigit()) {
+            $count += 1;
+        }
+        if ($this->isLengthLogerThanLimit()) {
+            $count += 1;
+        }
+        if ($this->isCommanPassword()) {
+            $count += 1;
+        }
+        return $count;
     }
 }
