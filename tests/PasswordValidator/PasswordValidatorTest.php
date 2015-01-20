@@ -91,7 +91,7 @@ class PasswordValidatorTest extends \PHPUnit_Framework_TestCase
     
     public function testPasswordVeryGood()
     {
-        $password1 = new PasswordValidator("BHAPKAR123");
+        $password1 = new PasswordValidator("bhapkar");
         
         $actual    = $password1->PasswordStrength();
         $this->assertEquals(2, $actual);
