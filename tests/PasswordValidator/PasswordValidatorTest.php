@@ -8,25 +8,25 @@ class PasswordValidatorTest extends \PHPUnit_Framework_TestCase
     {
         
         $password = new PasswordValidator("");
-        $this->assertEquals(0, $password->checkPasswordStrength());
+        $this->assertEquals(0, $password->strength());
         
         $password = new PasswordValidator("hbhs");
-        $this->assertEquals(1, $password->checkPasswordStrength());
+        $this->assertEquals(1, $password->strength());
         
         $password = new PasswordValidator("hghhfgfg");
-        $this->assertEquals(2, $password->checkPasswordStrength());
+        $this->assertEquals(2, $password->strength());
         
         $password = new PasswordValidator("hahAvas");
-        $this->assertEquals(3, $password->checkPasswordStrength());
+        $this->assertEquals(3, $password->strength());
         
         $password = new PasswordValidator("h2CakksA");
-        $this->assertEquals(4, $password->checkPasswordStrength());
+        $this->assertEquals(4, $password->strength());
         
         $password = new PasswordValidator("h@g4bg");
-        $this->assertEquals(5, $password->checkPasswordStrength());
+        $this->assertEquals(5, $password->strength());
         
         $password = new PasswordValidator("h@gA4&bg");
-        $this->assertEquals(6, $password->checkPasswordStrength());
+        $this->assertEquals(6, $password->strength());
     }
     
     public function testHasLowercaseCharacter()
@@ -86,5 +86,11 @@ class PasswordValidatorTest extends \PHPUnit_Framework_TestCase
     {
         $password = new PasswordValidator("Abd13#");
         $this->assertEquals(true, $password->isCommonPassword());
+    }
+
+    public function testNotCommonPasswordTest()
+    {
+        $password = new PasswordValidator("welcome");
+        $this->assertEquals(false, $password->isCommonPassword());
     }
 }

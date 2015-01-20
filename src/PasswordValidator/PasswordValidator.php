@@ -25,7 +25,7 @@ class PasswordValidator
             return false;
         }
     }
-    public function checkPasswordStrength()
+    public function strength()
     {
         static $strength = 1;
         if (strlen($this->password) == 0) {
@@ -37,7 +37,7 @@ class PasswordValidator
         }
         
         if ($this->calculateLength() && $this->hasLowercaseCharacter()) {
-            $strength += 1;
+            $strength += 1;     
             return $strength;
         }
         
