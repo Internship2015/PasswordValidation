@@ -9,27 +9,15 @@ class PasswordValidator
         $this->password = $password;
     }
     
-    /* This function return Password which is entered by user
-    Output type=string
-    */
-    
     public function getPassWord()
     {
         return $this->password;
     }
     
-    /* This function calculate Password length
-    Output type=integer
-    */
-    
     public function calculateLength()
     {
         return strlen($this->password);
     }
-    
-    /* This function checks Password is empty
-    Output type=boolean
-    */
     
     public function isEmpty()
     {
@@ -40,9 +28,9 @@ class PasswordValidator
         }
     }
     
-    /* This function checks Password length is greater than 6
-    Output type=boolean
-    */
+    /** This function checks Password length is greater than 6
+     * @return boolean
+     */
     
     public function isLengthLogerThanLimit()
     {
@@ -53,9 +41,9 @@ class PasswordValidator
         }
     }
     
-    /* This function cheks for upper case character has present in password
-    Output type=boolean
-    */
+    /** This function cheks for upper case character has present in password
+     * @return boolean
+     */
     
     public function hasUpperCaseCharacter()
     {
@@ -66,9 +54,9 @@ class PasswordValidator
         }
     }
     
-    /*This function cheks for digit has present in password
-    Output type=boolean
-    */
+    /** This function cheks for digit has present in password
+     * @return boolean
+     */
     
     public function hasDigit()
     {
@@ -79,9 +67,9 @@ class PasswordValidator
         }
     }
     
-    /* This function cheks for special character has present in password
-    Output type=boolean
-    */
+    /** This function cheks for special character has present in password
+     * @return boolean
+     */
     
     public function hasSpecialCharacter()
     {
@@ -92,9 +80,9 @@ class PasswordValidator
         }
     }
     
-    /* This function cheks for comman password
-    Output type=boolean
-    */
+    /** This function cheks for comman password
+     * @return boolean
+     */
     
     public function isCommanPassword()
     {
@@ -115,14 +103,14 @@ class PasswordValidator
         }
     }
     
-    /* This function checks Password strength(in numeric(0-5))
-    Output type=interger
-    */
+    /** This function checks Password strength(in numeric(0-5))
+     * @return integer [0-Empty,1-very weak,2-weak,3-so-so,4-strong]
+     */
     
     public function strength()
     {
         $count = 0;
-        if ($this->isEmpty()) {
+        if ($this->isEmpty() || $this->isCommanPassword()) {
             return $count;
         }
         if ($this->hasUpperCaseCharacter()) {
@@ -135,9 +123,6 @@ class PasswordValidator
             $count += 1;
         }
         if ($this->isLengthLogerThanLimit()) {
-            $count += 1;
-        }
-        if ($this->isCommanPassword()) {
             $count += 1;
         }
         return $count;
